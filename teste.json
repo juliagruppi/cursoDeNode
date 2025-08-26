@@ -1,0 +1,52 @@
+{
+    "dentalPlanData": [
+        {
+            "dependentType": null,
+            "fullName": "Eliane Isabella Moreira",
+            "weight": null,
+            "_classRevision": "59",
+            "type": "owner",
+            "birthDate": "1998-04-30T00:00Z",
+            "_class": {
+                "_id": "686d20250dd13e7914e4e125",
+                "_classId": "000000000000000000000000"
+            },
+            "proof": null,
+            "_id": "68a8d6035fccb815dcc06440",
+            "isEnrolled": null,
+            "plan": {
+                "_id": "686d25260dd13e7914181aaf",
+                "_classId": "686d170dc94d496913302fd5"
+            },
+            "value": 40.0,
+            "height": null
+        }
+    ],
+    "funeralPlanData": {
+        "_creationUser": {
+            "_id": "686bfd6d47aa5356b360f1c6",
+            "_classId": "000000000000000000000002"
+        },
+        "_revision": "1",
+        "_classId": "686d170dc94d496913302fd5",
+        "planName": "Plano Funerário",
+        "active": true,
+        "_lastUpdateUser": {
+            "_id": "686bfd6d47aa5356b360f1c6",
+            "_classId": "000000000000000000000002"
+        },
+        "_classRevision": "14",
+        "classification": "funeral",
+        "_creationDate": "2025-08-19T17:33:20.489Z",
+        "_publishedObject": null,
+        "_lastUpdateDate": "2025-08-19T17:45:38.321Z",
+        "_protected": false,
+        "ageGroupsAndValues": null,
+        "_class": {
+            "_id": "686d170dc94d496913302fd5",
+            "_classId": "000000000000000000000000"
+        },
+        "_id": "68a4b560ae92415041712718",
+        "value": 5.35
+    }
+}

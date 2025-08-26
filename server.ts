@@ -1,5 +1,10 @@
+import { fastifySwagger } from '@fastify/swagger'
 import fastify from "fastify"
-import crypto from "node:crypto"
+import { validatorCompiler, serializerCompiler, type ZodTypeProvider, jsonSchemaTransform } from "fastify-type-provider-zod"
+import { createCoursesRoute } from "./src/routes/create-courses-by-id.ts"
+import { getCoursesRoute } from "./src/routes/get-courses.ts"
+//import { getCoursesByIdRoute } from "./src/routes/get-courses-by-id.ts"
+import scalarAPIReference from '@scalar/fastify-api-reference'
 
 const server = fastify({
     logger: {
@@ -11,106 +16,87 @@ const server = fastify({
             },
         },
     },
-})
+}).withTypeProvider<ZodTypeProvider>()
 
-const courses = [
-    { id: '1', title: 'Curso de Node.js' },
-    { id: '2', title: 'Curso de React' },
-    { id: '3', title: 'Curso de Reactive Native' },
-]
+if (process.env.NODE_ENV === 'development') {
+    server.register(fastifySwagger, {
+        openapi: {
+            info: {
+                title: 'Desafio Node.js',
+                version: '1.0.0',
+            }
+        },
+        transform: jsonSchemaTransform,
+    })
 
-server.get('/courses', () => {
-    return { courses }
-})
-
-server.get('/courses/:id', (request, reply) => {
-    type Params = {
-        id: string
-    }
-
-    const params = request.params as Params;
-    const courseId = params.id;
-
-    const course = courses.find(course => course.id === courseId);
-
-    if (course) {
-        return { course }
-    }
-
-    return reply.status(404).send()
-})
-
-server.post('/courses', (request, reply) => {
-    type Body = {
-        title: string
-    }
-
-    const courseId = crypto.randomUUID();
-
-    const body = request.body as Body;
-    const courseTitle = body.title;
+    server.register(scalarAPIReference, {
+        routePrefix: '/docs',
+        configuration: {
+            theme: 'laserwave'
+        }
+    })
+}
 
 
-    if (!courseTitle) {
-        return reply.status(400).send({ message: 'Título obrigatório' });
-    }
 
-    courses.push({ id: courseId, title: courseTitle });
 
-    return reply.status(201).send({ courseId });
+server.setSerializerCompiler(serializerCompiler);
+server.setValidatorCompiler(validatorCompiler);
 
-})
+server.register(createCoursesRoute);
+server.register(getCoursesRoute);
+//server.register(getCoursesByIdRoute);
 
-server.patch('/courses/:id', (request, reply) => {
-    type Params = {
-        id: string
-    }
+// server.patch('/courses/:id', (request, reply) => {
+//     type Params = {
+//         id: string
+//     }
 
-    type Body = {
-        title: string
-    }
+//     type Body = {
+//         title: string
+//     }
 
-    const params = request.params as Params;
-    const body = request.body as Body;
+//     const params = request.params as Params;
+//     const body = request.body as Body;
 
-    const courseId = params.id;
-    const courseNewTitle = body.title; 
+//     const courseId = params.id;
+//     const courseNewTitle = body.title; 
 
-    if (!courseNewTitle){
-        return reply.status(400).send({ message: 'Informe o novo título'});
-    }
+//     if (!courseNewTitle){
+//         return reply.status(400).send({ message: 'Informe o novo título'});
+//     }
 
-   if(courseId){
-        const index = courses.findIndex(course => course.id === courseId);
+//    if(courseId){
+//         const index = courses.findIndex(course => course.id === courseId);
 
-        if(index === -1) return reply.status(404).send({ message: 'Curso não encontrado' });
+//         if(index === -1) return reply.status(404).send({ message: 'Curso não encontrado' });
 
-        courses[index].title = courseNewTitle;
+//         courses[index].title = courseNewTitle;
 
-        return reply.status(201).send({ course: courses[index] });
-    }
+//         return reply.status(201).send({ course: courses[index] });
+//     }
 
-})
+// })
 
-server.delete('/courses/:id', (request, reply) => {
-        type Params = {
-        id: string
-    }
+// server.delete('/courses/:id', (request, reply) => {
+//         type Params = {
+//         id: string
+//     }
 
-    const params = request.params as Params;
+//     const params = request.params as Params;
 
-    const courseId = params.id;
+//     const courseId = params.id;
 
-    if(courseId){
-        const index = courses.findIndex(course => course.id === courseId);
+//     if(courseId){
+//         const index = courses.findIndex(course => course.id === courseId);
 
-        if(index === -1) return reply.status(404).send({ message: 'Curso não encontrado' });
+//         if(index === -1) return reply.status(404).send({ message: 'Curso não encontrado' });
 
-        courses.splice(index, 1);
+//         courses.splice(index, 1);
 
-        return reply.status(201).send({ courses });
-    }
-})
+//         return reply.status(201).send({ courses });
+//     }
+// })
 
 server.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
