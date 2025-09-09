@@ -15,6 +15,41 @@
       "when": 1755561416425,
       "tag": "0001_cute_marauders",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756772745724,
+      "tag": "0002_left_meltdown",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1756772843128,
+      "tag": "0003_little_bloodscream",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1756939294842,
+      "tag": "0004_romantic_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1756940168002,
+      "tag": "0005_flaky_war_machine",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1756941357937,
+      "tag": "0006_steady_lightspeed",
+      "breakpoints": true
     }
   ]
 }
